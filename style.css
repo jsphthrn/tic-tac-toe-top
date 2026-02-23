@@ -11,6 +11,7 @@
     grid-template-columns: 1.5fr 8fr;
     grid-template-rows: 1fr 5fr 1fr;
     min-height: 100vh;
+    max-height: fit-content;
 }
 
 .header {
@@ -48,6 +49,28 @@
 .action-button:hover {
     color: #333;
     font-weight: 700;
+}
+
+#tic-tac-toe {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    width: fit-content;
+    background-color: #000;
+}
+
+.cell {
+    background-color: white;
+    align-self: center;
+    justify-self: stretch;
+    color: white;
+    font-size: 8em;
+    padding: 0.25em 1em;
+}
+
+[status = "active"] {
+    color: #000;
 }
 
 .logo {

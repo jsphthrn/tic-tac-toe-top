@@ -4,15 +4,20 @@ function Gameboard () {
         gameboard.innerHTML = "";
     }
     for (let i = 0; i < 3; i++) {
-            const gameboardRow = document.createElement("div");
-            gameboardRow.setAttribute("class", "row");
-            for (let j = 0; j < 3 ; j++ ) {
-                const gameboardCell = document.createElement("div");
-                gameboardCell.setAttribute("class", "cell");
-                gameboardCell.setAttribute("id", i + "-" + j)
-                gameboardRow.appendChild(gameboardCell);
+        for (let j = 0; j < 3 ; j++ ) {
+            const gameboardCell = document.createElement("div");
+            gameboardCell.setAttribute("class", "cell");
+            gameboardCell.setAttribute("id", i + ", " + j);
+            gameboardCell.textContent = "0";
+            gameboardCell.setAttribute("status", "inactive")
+            gameboardCell.addEventListener("click", () => {
+                if (gameboardCell.getAttribute("status") === "inactive") {
+                    gameboardCell.setAttribute("status", "active");
+                    gameboardCell.textContent = getCurrentPlayerMarker();
+                }
+            });
+            gameboard.appendChild(gameboardCell);
             }
-            gameboard.appendChild(gameboardRow);
         }    
     /*
     return (() => {
@@ -37,10 +42,11 @@ function createPlayer () {
         return crypto.randomUUID();
     }
 
-    return ((name) => {
+    return ((name, marker) => {
         let player = [];
         player.id = setUserId();
         player.name = setUserName(name);
+        player.marker = setMarker(marker);
         player.level = 0;
         return player;
     });
@@ -51,5 +57,20 @@ function Game () {
     const player1 = createPlayer();
     const player2 = createPlayer();
 
-    return [player1, player2];
+    let turn = true;
+    let currentPlayer;
+
+    if (turn) {
+        currentPlayer = player1;
+    } else {
+        currentPlayer = player2
+    }
+
+    
 }
+
+const newGame = document.getElementById("new-game");
+newGame.addEventListener("click", () => {
+    const gameSetting = document.getElementById("game-starting");
+    gameSetting.showModal();
+})

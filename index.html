@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My library app | jsphthrn</title>
+    <title>Tic Tac Toe | jsphthrn</title>
     <link href="./style.css" rel="stylesheet">
     <script src="./script.js" defer></script>
 </head>
@@ -40,10 +40,38 @@
             <div class="app-header">
                 <div class="app-name">Tic Tac Toe</div>
             </div>
-            <div id="tic-tac-toe">
-                
-            </div>
+            <div id="tic-tac-toe"></div>
         </div>
+
+        <dialog class="panel" id="game-starting">
+            <div class="panel-title">New game</div>
+            <form id="player-1-input">
+                <label for="player-1-name">Player 1: </label>
+                <input type="text" name="player-1-name" required>
+                
+                <input type="radio" id="x-1" value="X">
+                <label for="x-1">X</label>
+
+                <input type="radio" id="o-1" value="O">
+                <label for="o-1">O</label>
+            </form>
+            <form id="player-2-input">
+                <label for="player-2-name">Player 2: </label>
+                <input type="text" name="player-2-name" required>
+                
+                <input type="radio" id="x-2" value="X">
+                <label for="x-2">X</label>
+
+                <input type="radio" id="o-2" value="O">
+                <label for="o-2">O</label>
+            </form>
+
+            <div class="panel-bottom">
+                <button class="panel-button" id="start-game">Start</button>
+                <button class="panel-button" id="cancel-start">Cancel</button>
+            </div>
+
+        </dialog>
         
         <div class="footer">
             <div class="head-logo">
