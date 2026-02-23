@@ -1,2 +1,2 @@
-# tic-tac-toe-top
-Project: Tic Tac Toe from Javascript course
+# library-top
+Project: Library from Javascript
