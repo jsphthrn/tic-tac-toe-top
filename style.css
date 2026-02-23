@@ -124,6 +124,7 @@ a {
     grid-column: 1 / 2;
 }
 
+/*
 .user-session {
     grid-column: 2 / 3;
     display: flex;
@@ -131,17 +132,8 @@ a {
     flex-direction: row;
     align-items: center;
 }
+*/
 
-
-.username {
-    font-size: 1em;
-    font-weight: 300;
-    color: #555;
-    padding: 0.5em 1em;
-    border-left-style: solid;
-    border-left-width: 0.5px;
-    border-left-color: #555;
-}
 
 .panel:modal {
     display: flex;
@@ -258,4 +250,9 @@ a {
 
 .copyright {
     color: #fff
+}
+
+[selected = true] {
+    border-style: solid;
+    border-width: 2px;
 }
