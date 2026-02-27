@@ -1,76 +1,55 @@
 function Gameboard () {
-    const gameboard = document.getElementById("tic-tac-toe");
-    if (gameboard.hasChildNodes()) {
-        gameboard.innerHTML = "";
-    }
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3 ; j++ ) {
-            const gameboardCell = document.createElement("div");
-            gameboardCell.setAttribute("class", "cell");
-            gameboardCell.setAttribute("id", i + ", " + j);
-            gameboardCell.textContent = "0";
-            gameboardCell.setAttribute("status", "inactive")
-            gameboardCell.addEventListener("click", () => {
-                if (gameboardCell.getAttribute("status") === "inactive") {
-                    gameboardCell.setAttribute("status", "active");
-                    gameboardCell.textContent = getCurrentPlayerMarker();
-                }
-            });
-            gameboard.appendChild(gameboardCell);
-            }
-        }    
-    /*
-    return (() => {
-        let gameboard = [];
+    this.makeGrid = () => {
+        let board = [];
         for (let i = 0; i < 3; i++) {
-            gameboard[i] = [];
-            for (let j = 0; j < 3 ; j++ ) {
-                gameboard[i][j] = null;
+            board[i] = [];
+            for (let j = 0; j < 3; j++) {
+                board[i][j] = null;
             }
         }
-        return gameboard;
-    });
-    */
+        this.grid = board;
+    }
+    this.grid = null;
 }
 
-function createPlayer () {
-
-    function setUserName(userName) {
-        return userName.toString(); 
-    }
-    function setUserId () {
-        return crypto.randomUUID();
-    }
-
-    return ((name, marker) => {
-        let player = [];
-        player.id = setUserId();
-        player.name = setUserName(name);
-        player.marker = setMarker(marker);
-        player.level = 0;
-        return player;
-    });
+function Player (id, mark) {
+    this.id = id;
+    this.mark = mark;
 }
 
-function Game () {
-    
-    const player1 = createPlayer();
-    const player2 = createPlayer();
+function Game (board, player1, player2) {
 
-    let turn = true;
-    let currentPlayer;
-
-    if (turn) {
-        currentPlayer = player1;
-    } else {
-        currentPlayer = player2
+    this.gameFlow = () => {
+        while (this.isActive) {
+            this.checkTurn();
+            this.makePlay();
+            board;
+            this.checkWin();
+        }
     }
 
-    
+    this.checkTurn = () => {
+        this.turn ? this.currentPlayer = player1 : this.currentPlayer = player2;
+    }
+
+    this.makePlay = () => {
+        let position = prompt("Coordinates e.g. x, y");
+        position = position.split(", ");
+        board.grid[position[0]-1][position[1]-1] = this.currentPlayer.mark;
+        this.turn = !this.turn;
+    }
+
+    this.checkWin = () => {
+
+    }
+
+
+
 }
 
-const newGame = document.getElementById("new-game");
-newGame.addEventListener("click", () => {
-    const gameSetting = document.getElementById("game-starting");
-    gameSetting.showModal();
-})
+let jose = new Player ("Jose", "X");
+let john = new Player ("John", "O");
+
+let gameboard = new Gameboard ();
+gameboard.makeGrid();
+
