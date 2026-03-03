@@ -55,21 +55,30 @@ function Game (board, player1, player2) {
         let position = prompt("Coordinates e.g. x, y");
         position = position.split(", ");
 
-        if (this.turn) {
+        if (board.grid[position[0]-1][position[1]-1] === null) {
 
-            board.grid[position[0]-1][position[1]-1] = player1.mark;
-            player1.markedCells.push([position[0] * 1, position[1] * 1]);
-            this.checkWin(player1);
+            if (this.turn) {
+
+                board.grid[position[0]-1][position[1]-1] = player1.mark;
+                player1.markedCells.push([position[0] * 1, position[1] * 1]);
+                this.checkWin(player1);
+
+            } else {
+
+                board.grid[position[0]-1][position[1]-1] = player2.mark;
+                player2.markedCells.push([position[0] * 1, position[1] * 1]);
+                this.checkWin(player2);
+
+            }
+
+            this.turn = !this.turn;
 
         } else {
 
-            board.grid[position[0]-1][position[1]-1] = player2.mark;
-            player2.markedCells.push([position[0] * 1, position[1] * 1]);
-            this.checkWin(player2);
+            alert("Position occupied!");
 
         }
-
-        this.turn = !this.turn;
+        
     }
 
     this.checkWin = (player) => {
@@ -108,6 +117,9 @@ function Game (board, player1, player2) {
     }
 }
 
+
+/* TESTING CODE FOR CONSOLE USE CASE
+
 let jose = new Player ("Jose", "X");
 let john = new Player ("John", "O");
 
@@ -115,3 +127,8 @@ let gameboard = new Gameboard ();
 gameboard.makeGrid();
 
 let game = new Game (gameboard, jose, john);
+game.isActive = true;
+game.turn = true;
+*/
+
+
