@@ -4,17 +4,39 @@ function Gameboard () {
 
         let board = [];
 
+        const DOMBoard = document.createElement("div");
+        DOMBoard.setAttribute("id", "board");
+
+
         for (let i = 0; i < 3; i++) {
+
+            const boardRow = document.createElement("div");
+            boardRow.setAttribute("id","row-" + (i + 1));
 
             board[i] = [];
 
             for (let j = 0; j < 3; j++) {
 
+                const boardCell = document.createElement("div");
+                boardCell.setAttribute("row", i + 1);
+                boardCell.setAttribute("column", j + 1);
+                boardCell.setAttribute("class", "cell");
+                boardCell.textContent = "0";
+                boardCell.addEventListener("click", game.makePlay(i, j, boardCell));
+                boardRow.appendChild(boardCell);
+
                 board[i][j] = null;
             }
+
+            DOMBoard.appendChild(boardRow);
+
         }
 
+        document.getElementById("tic-tac-toe").appendChild(DOMBoard);
         this.grid = board;
+
+        
+
     }
 
     this.grid = null;
@@ -36,7 +58,7 @@ function Game (board, player1, player2) {
 
     this.winner = null;
 
-    this.gameFlow = () => {
+    this.gameStart = () => {
 
         while (this.isActive) {
 
@@ -50,23 +72,22 @@ function Game (board, player1, player2) {
         }
     }
 
-    this.makePlay = () => {
+    this.makePlay = (row, column, cell) => {
 
-        let position = prompt("Coordinates e.g. x, y");
-        position = position.split(", ");
-
-        if (board.grid[position[0]-1][position[1]-1] === null) {
+        if ((board.grid[row][column] === null) && this.isActive) {
 
             if (this.turn) {
 
-                board.grid[position[0]-1][position[1]-1] = player1.mark;
-                player1.markedCells.push([position[0] * 1, position[1] * 1]);
+                board.grid[row][column] = player1.mark;
+                cell.textContent = player1.mark;
+                player1.markedCells.push([row + 1, column + 1]);
                 this.checkWin(player1);
 
             } else {
 
-                board.grid[position[0]-1][position[1]-1] = player2.mark;
-                player2.markedCells.push([position[0] * 1, position[1] * 1]);
+                board.grid[row][column] = player2.mark;
+                cell.textContent = player2.mark;
+                player2.markedCells.push([row + 1, column + 1]);
                 this.checkWin(player2);
 
             }
@@ -131,4 +152,43 @@ game.isActive = true;
 game.turn = true;
 */
 
+// DOM elements
 
+const newGameButton = document.getElementById("new-game");
+
+newGameButton.addEventListener("click", () => {
+
+    document.getElementById("game-starting").showModal();
+
+});
+
+const cancelNewGameButton = document.getElementById("cancel-start");
+
+cancelNewGameButton.addEventListener("click", () => {
+
+    document.getElementById("game-starting").close();
+
+});
+
+const startGameButton = document.getElementById("start-game");
+
+startGameButton.addEventListener("click", () => {
+
+    document.getElementById("tic-tac-toe").removeChild(document.getElementById("board"));
+
+    let gameboard = new Gameboard ();
+    gameboard.makeGrid();
+
+    let player1 = new Player (document.getElementById("player-1-name").value, 
+    document.getElementById("marker-1").value);
+
+    let player2 = new Player (document.getElementById("player-2-name").value, 
+    document.getElementById("marker-2").value);
+
+    let game = new Game (gameboard, player1, player2);
+
+    game.turn = true;
+    game.isActive = true;
+    // game.gameStart();
+
+});
