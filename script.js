@@ -35,9 +35,11 @@ function Gameboard () {
                 boardCell.setAttribute("id",(i + 1) + ", " + (j + 1));
                 boardCell.textContent = "0";
                 boardCell.addEventListener("click", () => {
-                    boardCell.setAttribute("active", "true");
+                    
                     game.makePlay(boardCell.getAttribute("row"), boardCell.getAttribute("column"));
+
                 });
+
                 boardRow.appendChild(boardCell);
 
             }
@@ -67,7 +69,8 @@ function Player (id, mark) {
 function Game (board, player1, player2) {
 
     this.winingPatterns = [[[1, 1], [1, 2], [1, 3]], [[2, 1], [2, 2], [2, 3]], [[3, 1], [3, 2], [3, 3]],
-        [[1, 1], [2, 1], [3, 1]], [[2, 1], [1, 2], [2, 2], [3, 2]], [[3, 1], [3, 2], [3, 3]], [[1, 1], [2, 2], [3, 3]], [[3, 1], [2, 2], [1, 3]]
+        [[1, 1], [2, 1], [3, 1]], [[1, 2], [2, 2], [3, 2]], [[3, 1], [3, 2], [3, 3]], [[1, 1], [2, 2], [3, 3]], 
+        [[3, 1], [2, 2], [1, 3]], [[1, 3], [2, 3], [3, 3]]
     ];
 
     this.winner = null;
@@ -92,34 +95,44 @@ function Game (board, player1, player2) {
 
     this.makePlay = (row, column) => {
 
-        if ((board.grid[row - 1][column - 1] === null) && (this.isActive === true) ) {
+        if (this.isActive) {
+        
+            if ((board.grid[row - 1][column - 1] === null)) {
 
-            if (this.turn) {
+                if (this.turn) {
 
-                board.grid[row - 1][column - 1] = player1.mark;
-                console.log(board.grid);
-                document.getElementById(row + ", " + column).textContent = player1.mark;
-                player1.markedCells.push([row, column]);
-                this.checkWin(player1);
+                    board.grid[row - 1][column - 1] = player1.mark;
+                    console.log(board.grid);
+                    document.getElementById(row + ", " + column).textContent = player1.mark;
+                    document.getElementById(row + ", " + column).setAttribute("active", "true");
+                    player1.markedCells.push([row, column]);
+                    this.checkWin(player1);
+
+                } else {
+
+                    board.grid[row - 1][column - 1] = player2.mark;
+                    console.log(board.grid);
+                    document.getElementById(row + ", " + column).textContent = player2.mark;
+                    document.getElementById(row + ", " + column).setAttribute("active", "true");
+                    player2.markedCells.push([row, column]);
+                    this.checkWin(player2);
+
+                }
+
+                this.turn = !this.turn;
 
             } else {
 
-                board.grid[row - 1][column - 1] = player2.mark;
-                console.log(board.grid);
-                document.getElementById(row + ", " + column).textContent = player2.mark;
-                player2.markedCells.push([row, column]);
-                this.checkWin(player2);
+                alert("Position occupied!");
 
             }
-
-            this.turn = !this.turn;
-
+            
         } else {
 
-            alert("Position occupied!");
+            alert("Please start a new game.");
 
         }
-        
+
     }
 
     this.checkWin = (player) => {
@@ -150,7 +163,10 @@ function Game (board, player1, player2) {
                 if (check.length === 3) {
                     
                     this.winner = player.id;
-                    console.log(this.winner);
+                    const winner = document.createElement("div");
+                    winner.setAttribute("id","game-winner");
+                    winner.textContent = "Winner: " + this.winner;
+                    document.getElementById("tic-tac-toe").appendChild(winner);
                     this.isActive = false;
                     break;
                 }
@@ -200,6 +216,11 @@ startGameButton.addEventListener("click", () => {
 
         document.getElementById("tic-tac-toe").removeChild(document.getElementById("board"));
 
+        if (!(document.getElementById("game-winner") === null)) {
+            
+            document.getElementById("tic-tac-toe").removeChild(document.getElementById("game-winner"));
+            
+        }
     }
 
     document.getElementById("game-starting").close();

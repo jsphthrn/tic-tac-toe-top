@@ -1,2 +1,2 @@
-# library-top
-Project: Library from Javascript
+# Tic Tac Toe
+Project: Tic Tac Toe from Javascript course

@@ -51,12 +51,17 @@
     font-weight: 700;
 }
 
+#tic-tac-toe {
+    display: flex;
+    gap: 2em;
+}
+
 #board {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr;
     gap: 8px;
-    width: fit-content;
+    width: 70em;
     background-color: #000;
 }
 
@@ -71,7 +76,7 @@
     align-self: center;
     justify-self: stretch;
     color: white;
-    font-size: 8em;
+    font-size: 6em;
     padding: 0.25em 1em;
 }
 
