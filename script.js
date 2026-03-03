@@ -1,19 +1,29 @@
 function Gameboard () {
 
-    this.makeGrid = () => {
+    this.makeGrid = (game) => {
 
         let board = [];
 
+        for (let i = 0; i < 3; i++) {
+
+            board[i] = [];
+
+            for (let j = 0; j < 3; j++) {
+
+                board[i][j] = null;
+            }
+
+        }
+
+        this.grid = board;
+
         const DOMBoard = document.createElement("div");
         DOMBoard.setAttribute("id", "board");
-
 
         for (let i = 0; i < 3; i++) {
 
             const boardRow = document.createElement("div");
             boardRow.setAttribute("id","row-" + (i + 1));
-
-            board[i] = [];
 
             for (let j = 0; j < 3; j++) {
 
@@ -22,10 +32,11 @@ function Gameboard () {
                 boardCell.setAttribute("column", j + 1);
                 boardCell.setAttribute("class", "cell");
                 boardCell.textContent = "0";
-                boardCell.addEventListener("click", game.makePlay(i, j, boardCell));
+                boardCell.addEventListener("click", (i, j, boardCell) => {
+                    game.makePlay(i, j, boardCell);
+                });
                 boardRow.appendChild(boardCell);
 
-                board[i][j] = null;
             }
 
             DOMBoard.appendChild(boardRow);
@@ -33,7 +44,7 @@ function Gameboard () {
         }
 
         document.getElementById("tic-tac-toe").appendChild(DOMBoard);
-        this.grid = board;
+        
 
         
 
@@ -58,6 +69,8 @@ function Game (board, player1, player2) {
 
     this.winner = null;
 
+    /*
+
     this.gameStart = () => {
 
         while (this.isActive) {
@@ -72,9 +85,11 @@ function Game (board, player1, player2) {
         }
     }
 
+    */ 
+
     this.makePlay = (row, column, cell) => {
 
-        if ((board.grid[row][column] === null) && this.isActive) {
+        if ((board.grid[row][column] === null) && (this.isActive === true) ) {
 
             if (this.turn) {
 
@@ -174,10 +189,16 @@ const startGameButton = document.getElementById("start-game");
 
 startGameButton.addEventListener("click", () => {
 
-    document.getElementById("tic-tac-toe").removeChild(document.getElementById("board"));
+
+    if (!(document.getElementById("board") === null)) {
+
+        document.getElementById("tic-tac-toe").removeChild(document.getElementById("board"));
+
+    }
+
+    document.getElementById("game-starting").close();
 
     let gameboard = new Gameboard ();
-    gameboard.makeGrid();
 
     let player1 = new Player (document.getElementById("player-1-name").value, 
     document.getElementById("marker-1").value);
@@ -189,6 +210,9 @@ startGameButton.addEventListener("click", () => {
 
     game.turn = true;
     game.isActive = true;
+    
+    gameboard.makeGrid(game);
+    
     // game.gameStart();
 
 });
