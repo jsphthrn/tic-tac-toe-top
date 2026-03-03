@@ -51,13 +51,19 @@
     font-weight: 700;
 }
 
-#tic-tac-toe {
+#board {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 8px;
     width: fit-content;
     background-color: #000;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
 }
 
 .cell {
@@ -69,7 +75,7 @@
     padding: 0.25em 1em;
 }
 
-[status = "active"] {
+[active = "true"] {
     color: #000;
 }
 

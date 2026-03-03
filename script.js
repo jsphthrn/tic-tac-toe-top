@@ -24,6 +24,7 @@ function Gameboard () {
 
             const boardRow = document.createElement("div");
             boardRow.setAttribute("id","row-" + (i + 1));
+            boardRow.setAttribute("class", "row");
 
             for (let j = 0; j < 3; j++) {
 
@@ -31,9 +32,11 @@ function Gameboard () {
                 boardCell.setAttribute("row", i + 1);
                 boardCell.setAttribute("column", j + 1);
                 boardCell.setAttribute("class", "cell");
+                boardCell.setAttribute("id",(i + 1) + ", " + (j + 1));
                 boardCell.textContent = "0";
-                boardCell.addEventListener("click", (i, j, boardCell) => {
-                    game.makePlay(i, j, boardCell);
+                boardCell.addEventListener("click", () => {
+                    boardCell.setAttribute("active", "true");
+                    game.makePlay(boardCell.getAttribute("row"), boardCell.getAttribute("column"));
                 });
                 boardRow.appendChild(boardCell);
 
@@ -87,22 +90,24 @@ function Game (board, player1, player2) {
 
     */ 
 
-    this.makePlay = (row, column, cell) => {
+    this.makePlay = (row, column) => {
 
-        if ((board.grid[row][column] === null) && (this.isActive === true) ) {
+        if ((board.grid[row - 1][column - 1] === null) && (this.isActive === true) ) {
 
             if (this.turn) {
 
-                board.grid[row][column] = player1.mark;
-                cell.textContent = player1.mark;
-                player1.markedCells.push([row + 1, column + 1]);
+                board.grid[row - 1][column - 1] = player1.mark;
+                console.log(board.grid);
+                document.getElementById(row + ", " + column).textContent = player1.mark;
+                player1.markedCells.push([row, column]);
                 this.checkWin(player1);
 
             } else {
 
-                board.grid[row][column] = player2.mark;
-                cell.textContent = player2.mark;
-                player2.markedCells.push([row + 1, column + 1]);
+                board.grid[row - 1][column - 1] = player2.mark;
+                console.log(board.grid);
+                document.getElementById(row + ", " + column).textContent = player2.mark;
+                player2.markedCells.push([row, column]);
                 this.checkWin(player2);
 
             }
@@ -145,6 +150,7 @@ function Game (board, player1, player2) {
                 if (check.length === 3) {
                     
                     this.winner = player.id;
+                    console.log(this.winner);
                     this.isActive = false;
                     break;
                 }
