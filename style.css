@@ -54,30 +54,39 @@
 #tic-tac-toe {
     display: flex;
     gap: 2em;
+    flex-direction: row;
 }
 
 #board {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr;
-    gap: 8px;
-    width: 70em;
+    gap: 4px;
     background-color: #000;
+    box-sizing: border-box;
 }
 
 .row {
     display: flex;
     flex-direction: row;
-    gap: 8px;
+    gap: 4px;
+    box-sizing: border-box;
 }
 
 .cell {
     background-color: white;
     align-self: center;
-    justify-self: stretch;
+    justify-self: center;
+    text-align: center;
     color: white;
-    font-size: 6em;
-    padding: 0.25em 1em;
+    font-size: 5em;
+    padding: 0.25em 0.25em;
+    box-sizing: border-box;
+    width: 4.5em;
+}
+
+#game-winner {
+    font-size: 2em;
 }
 
 [active = "true"] {
@@ -217,8 +226,9 @@ a {
     font-weight: 300;
     border-style: solid;
     border-width: 1.5px;
-    width: 3.5em;
+    width: fit-content;
     text-align: center;
+    background-color: #fff;
 }
 
 .input-container-horizontal {
@@ -235,7 +245,8 @@ a {
     display: flex;
     flex-direction: row;
     gap: 2em;
-    justify-content: center;
+    justify-content: space-evenly;
+    padding: 1em;
 }
 
 .panel::backdrop {
